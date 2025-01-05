@@ -1,1 +1,1 @@
-# the_final_draft_of_the_test_automation_course
+# Здесь хранится итоговый проект курса по автотестированию с помощью Selenium и Python 

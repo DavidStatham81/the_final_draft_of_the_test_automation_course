@@ -2,21 +2,50 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import math
 import time
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 class BasePage():
+    # Конструктор — метод, который вызывается, когда мы создаем объект.
+    # Конструктор объявляется ключевым словом __init__.
+    # В него в качестве параметров мы передаем экземпляр драйвера и url адрес,
+    # а так же время неявного ожидания элемента.
+    # Внутри конструктора сохраняем эти данные как аттрибуты нашего класса.
     def __init__(self, browser, url, timeout=10):
         self.browser = browser
         self.url = url
         self.browser.implicitly_wait(timeout)
 
+    # Открываем страницу в браузере
     def open(self):
         self.browser.get(self.url)
 
+    # Проверка того, что элемент отображается на странице
+    # (будет ждать в соответствии с заданным неявным ожиданием 10 секунд)
     def is_element_present(self, how, what):
         try:
             self.browser.find_element(how, what)
         except (NoSuchElementException):
             return False
+        return True
+
+    # Проверка того, что элемент не появляется на странице в течение заданного времени:
+    def is_not_element_present(self, how, what, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return True
+
+        return False
+    # Проверка того, что элемент перестает отображаться на странице после истечения заданного времени
+    def is_disappeared(self, how, what, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout, 1, TimeoutException). \
+                until_not(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return False
+
         return True
 
     # Метод для расчета результата математического выражения

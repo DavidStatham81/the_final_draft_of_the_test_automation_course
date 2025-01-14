@@ -2,10 +2,38 @@ from .base_page import BasePage
 from .locators import ProductPageLocators
 
 class ProductPage(BasePage):
+    # Клик по кнопке добавления товара в корзину, переход на алерт, подсчет кода, переход на следующий алерт и его закрытие
     def add_to_basket(self):
-        print("Trying to find the add to basket button")
         button_add = self.browser.find_element(*ProductPageLocators.BUTTON_ADD_TO_BASKET)
-        print("Button found")
         button_add.click()
-        print("Button clicked")
         self.solve_quiz_and_get_code()
+
+    # Поиск сообщения о том, что товар добавлен в корзину, возврат наименования товара.
+    def message_product_added_to_basket(self):
+        # Находим название добавляемого товара
+        name_product = self.browser.find_element(*ProductPageLocators.EXPECTED_NAME_OF_BOOK).text
+        return name_product
+
+    # Сравнение наименования товара в сообщении и на карточке товара
+    def comparison_of_product_names(self, name_product):
+        # Находим название добавляемого товара
+        product_name_from_the_message = self.browser.find_element(*ProductPageLocators.ACTUAL_NAME_OF_BOOK).text
+        # Проверка того, что название товара в сообщении совпадает с названием товара, который действительно добавили.
+        assert name_product == product_name_from_the_message, "Incorrect product added to cart"
+
+
+
+    # Поиск сообщения со стоимостью корзины.
+    def message_basket_price(self):
+        # Находим стоимость добавляемого товара
+        price_product = self.browser.find_element(*ProductPageLocators.EXPECTED_PRICE_OF_BOOK).text
+        return price_product
+
+    # Сравнение цены на карточке товара и стоимости корзины в сообщении
+    def comparison_product_price(self, price_product):
+        # Находим сообщение со стоимостью корзины.Стоимость корзины должна совпадать с ценой товара.
+        price_product_in_message = self.browser.find_element(*ProductPageLocators.ACTUAL_PRICE_OF_BOOK).text
+        # Сраванивем сообщения
+        assert price_product == price_product_in_message, "The price of the product does not match"
+
+

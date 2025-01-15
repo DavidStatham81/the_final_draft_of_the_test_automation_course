@@ -5,6 +5,7 @@ import time
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from .locators import BasePageLocators
 
 class BasePage():
     # Конструктор — метод, который вызывается, когда мы создаем объект.
@@ -38,6 +39,7 @@ class BasePage():
             return True
 
         return False
+
     # Проверка того, что элемент перестает отображаться на странице после истечения заданного времени
     def is_disappeared(self, how, what, timeout=4):
         try:
@@ -65,4 +67,11 @@ class BasePage():
         except NoAlertPresentException:
             print("No second alert presented")
 
+    # Метод для проверки переходя на страницу автоирзации
+    def go_to_login_page(self):
+        link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
+        link.click()
 
+    # Метод для проверки наличия ссылки на страницу автоирзации
+    def should_be_login_link(self):
+        assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"

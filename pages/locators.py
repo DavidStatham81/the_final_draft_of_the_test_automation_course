@@ -1,6 +1,16 @@
 from selenium.webdriver.common.by import By
 
 
+class BasePageLocators():
+    # Эти ссылки есть на каждой из страниц сайта, поэтому решено вынести их отдельно
+    LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
+    # Этот локатор нужен для проверки текста об ошибке
+    LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
+
+
+
+
+
 class MainPageLocators():
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
 

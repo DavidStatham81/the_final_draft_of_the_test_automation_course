@@ -40,5 +40,15 @@ class ProductPageLocators():
     # локатор стоимости корзины
     ACTUAL_PRICE_OF_BOOK = (By.CSS_SELECTOR, "div.alert:nth-child(3) .alertinner p strong")
 
+class BasketPageLocators():
+    # Локатор кнопки перехода в корзину
+    BASKET_LINK = (By.CSS_SELECTOR, ".btn-group > a:nth-child(1)")
+
+    # Локатор указывающий на то, что корзине не пуста
+    BASKET_NOT_EMPTY = (By.CSS_SELECTOR, "h2.col-sm-6")
+
+    # Локатор сообщения о том, что в корзине нет товаров
+    MESSAGE_BASKET_EMPTY = (By.CSS_SELECTOR, "#content_inner > p:nth-child(1)")
+
 
 

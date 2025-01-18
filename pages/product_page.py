@@ -2,11 +2,13 @@ from .base_page import BasePage
 from .locators import ProductPageLocators
 
 class ProductPage(BasePage):
-    # Клик по кнопке добавления товара в корзину, переход на алерт, подсчет кода, переход на следующий алерт и его закрытие
+    # Клик по кнопке добавления товара в корзину, переход на алерт, подсчет кода,
+    # переход на следующий алерт и его закрытие
     def add_to_basket(self):
         button_add = self.browser.find_element(*ProductPageLocators.BUTTON_ADD_TO_BASKET)
         button_add.click()
-        #self.solve_quiz_and_get_code()
+        # Прохождение капчи - только для акций, временно закомментирован
+        # self.solve_quiz_and_get_code()
 
     # Поиск сообщения о том, что товар добавлен в корзину, возврат наименования товара.
     def message_product_added_to_basket(self):

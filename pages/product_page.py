@@ -7,8 +7,7 @@ class ProductPage(BasePage):
     def add_to_basket(self):
         button_add = self.browser.find_element(*ProductPageLocators.BUTTON_ADD_TO_BASKET)
         button_add.click()
-        # Прохождение капчи - только для акций, временно закомментирован
-        # self.solve_quiz_and_get_code()
+        self.solve_quiz_and_get_code()
 
     # Поиск сообщения о том, что товар добавлен в корзину, возврат наименования товара.
     def message_product_added_to_basket(self):
